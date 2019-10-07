@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity, Button, CheckBox} from 'react-native';
+import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class App extends Component {
@@ -34,7 +34,16 @@ export default class App extends Component {
           {this.state.data.map((val, index) =>{
             return (
               <View key={index} style={styles.list}>
-                <Text style={styles.Text}>{val.text}</Text>
+                  <Text style={styles.Text}>{val.text}</Text>
+                <Icon.Button
+                  color= 'red'
+                  backgroundColor= 'white'
+                  style={styles.iconbtn}
+                  name="delete"
+                  size= {30}
+                  onPress={() => {this.deleteTodo(index)}}
+                >
+                </Icon.Button>
               </View>
             )
           })}
@@ -52,6 +61,10 @@ export default class App extends Component {
       this.setState({data: this.state.data})
     }
     this.setState({notetext: ''})
+  }
+  deleteTodo(index){
+    this.state.data.splice(index, 1)
+    this.setState({data : this.state.data})
   }
 }
 const styles = StyleSheet.create({
@@ -83,6 +96,14 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     marginRight: 10,
   },
+  btnadd: {
+    padding: 10,
+    borderWidth: 0.5,
+    borderColor: 'black',
+    borderStyle: 'solid',
+    fontSize: 18,
+    marginRight: 10,
+  },
   create:{
     paddingLeft: 10,
     flexDirection : 'row',
@@ -92,13 +113,5 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     paddingRight: 0
-  },
-  btnadd: {
-    padding: 10,
-    borderWidth: 0.5,
-    borderColor: 'black',
-    borderStyle: 'solid',
-    fontSize: 18,
-    marginRight: 10,
   },
 })
