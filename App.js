@@ -39,7 +39,18 @@ export default class App extends Component {
                   value={val.checked}
                   />
                 </TouchableOpacity>
-                  <Text style={styles.Text}>{val.text}</Text>
+                
+                <Text style={styles.Text}>{val.text}</Text>
+                
+                <Icon.Button
+                  color= 'red'
+                  backgroundColor= 'white'
+                  style={styles.iconbtn}
+                  name="edit"
+                  size= {30}
+                  onPress={() => {this.editTodo(index)}}
+                >
+                </Icon.Button>
                 <Icon.Button
                   color= 'red'
                   backgroundColor= 'white'
@@ -85,6 +96,10 @@ export default class App extends Component {
       })
       this.setState({data: this.state.data})
     }
+  }
+  editTodo(index){
+    const array = [...this.state.data];
+    this.setState({notetext : array[index].text})
   }
 }
 const styles = StyleSheet.create({
