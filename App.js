@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity, Button, CheckBox} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class App extends Component {
@@ -34,6 +34,11 @@ export default class App extends Component {
           {this.state.data.map((val, index) =>{
             return (
               <View key={index} style={styles.list}>
+                <TouchableOpacity style={styles.checked} onPress={() => {this.checked(index)}}>
+                  <CheckBox
+                  value={val.checked}
+                  />
+                </TouchableOpacity>
                   <Text style={styles.Text}>{val.text}</Text>
                 <Icon.Button
                   color= 'red'
@@ -53,7 +58,6 @@ export default class App extends Component {
   }
   addTodo(){
     if(this.state.notetext){
-      const joined = this.state.data.concat(this.state.notetext);
       this.state.data.push({
         text: this.state.notetext,
         checked: false
@@ -65,6 +69,22 @@ export default class App extends Component {
   deleteTodo(index){
     this.state.data.splice(index, 1)
     this.setState({data : this.state.data})
+  }
+  checked(index){
+    const array = [...this.state.data]
+    if(array[index].checked == false){
+      this.state.data.push({
+        text: array[index].text,
+        checked: true
+      })
+      this.setState({data: this.state.data})
+    }else{
+      this.state.data.push({
+        text: array[index].text,
+        checked: false
+      })
+      this.setState({data: this.state.data})
+    }
   }
 }
 const styles = StyleSheet.create({
@@ -96,6 +116,9 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     marginRight: 10,
   },
+  checked:{
+    alignSelf: 'center'
+  },
   btnadd: {
     padding: 10,
     borderWidth: 0.5,
@@ -114,4 +137,9 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingRight: 0
   },
+  iconbtncheck:{
+    flex: 1,
+    padding: 10,
+    paddingRight: 10
+  }
 })
